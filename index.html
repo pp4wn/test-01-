@@ -4,387 +4,568 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Andie's Product Store</title>
+<title>Midget Uprising</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+:root {
+    --orange: #ff9800;
+    --background: #080808;
+    --panel: #171717;
+    --text: #eeeeee;
+    --muted: #a0a0a0;
 }
 
-:root {
-    --primary: #a85575;
-    --background: #fff8fa;
-    --text: #30232a;
-    --card: #ffffff;
-}
+* { box-sizing: border-box; }
 
 body {
-    font-family: Arial, sans-serif;
+    margin: 0;
     background: var(--background);
     color: var(--text);
+    font-family: Arial, sans-serif;
 }
 
-header {
-    background: white;
-    padding: 20px 7%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #f0dfe6;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--primary);
+button, input, textarea {
+    font: inherit;
 }
 
 button {
-    border: none;
-    padding: 10px 16px;
-    border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    border: none;
+    border-radius: 3px;
+    padding: 11px 16px;
 }
 
-.primary-btn {
-    background: var(--primary);
+button:hover {
+    filter: brightness(1.15);
+}
+
+.primary {
+    background: var(--orange);
+    color: #111;
+    font-weight: bold;
+}
+
+.secondary {
+    background: #303030;
     color: white;
 }
 
-.secondary-btn {
-    background: #f5e6ec;
-    color: var(--text);
+header {
+    height: 65px;
+    padding: 0 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #101010;
+    border-bottom: 1px solid #292929;
+    position: relative;
+    z-index: 2;
 }
 
+.logo {
+    font-size: 19px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: #111;
+    background: var(--orange);
+    padding: 4px 5px;
+    margin-left: 3px;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.nav a:hover { color: var(--orange); }
+
 .hero {
+    position: relative;
+    padding: 65px 20px;
     text-align: center;
-    padding: 55px 20px;
-    background: #fcecf2;
+    background:
+        radial-gradient(ellipse at center, #292015 0%, #111 48%, #080808 85%);
+    border-bottom: 1px solid #242424;
+}
+
+.hero .eyebrow {
+    color: var(--orange);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 4px;
 }
 
 .hero h1 {
-    font-size: 36px;
-    margin-bottom: 12px;
+    font-size: clamp(32px, 6vw, 58px);
+    margin: 15px 0;
+    letter-spacing: -2px;
 }
 
 .hero p {
-    color: #705c65;
-    line-height: 1.6;
+    max-width: 550px;
+    margin: 0 auto 25px;
+    color: #aaa;
+    line-height: 1.7;
+    font-size: 14px;
 }
 
 main {
-    max-width: 1200px;
-    padding: 35px 20px;
+    max-width: 1150px;
+    padding: 35px 20px 70px;
     margin: auto;
 }
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    font-size: 19px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.section-heading h2 span { color: var(--orange); }
 
 .toolbar {
     display: flex;
     gap: 10px;
     margin-bottom: 25px;
-    flex-wrap: wrap;
 }
 
 input, textarea {
-    padding: 11px;
-    border: 1px solid #e6cdd7;
-    border-radius: 8px;
-    font: inherit;
     width: 100%;
+    padding: 12px;
+    color: white;
+    background: #101010;
+    border: 1px solid #383838;
+    border-radius: 3px;
+    outline: none;
 }
 
-#search {
-    flex: 1;
-    min-width: 180px;
+input:focus, textarea:focus {
+    border-color: var(--orange);
 }
+
+#search { flex: 1; min-width: 150px; }
 
 #products {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 22px;
+    gap: 20px;
 }
 
 .product {
-    background: var(--card);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid #f0dfe6;
+    background: #151515;
+    border: 1px solid #292929;
+    transition: border-color .2s, transform .2s;
+}
+
+.product:hover {
+    border-color: #79501d;
+    transform: translateY(-3px);
 }
 
 .product img {
-    width: 100%;
-    height: 210px;
-    object-fit: cover;
-    background: #f6e9ef;
     display: block;
+    width: 100%;
+    height: 215px;
+    object-fit: cover;
+    background: #222;
 }
 
-.product-info {
-    padding: 16px;
-}
+.product-info { padding: 16px; }
 
 .product h3 {
-    margin-bottom: 8px;
+    font-size: 16px;
+    margin: 0 0 10px;
 }
 
 .description {
-    font-size: 14px;
-    color: #76656d;
-    line-height: 1.5;
-    margin-bottom: 12px;
+    color: #999;
+    font-size: 13px;
+    line-height: 1.6;
+    min-height: 40px;
     white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }
 
 .price {
+    color: var(--orange);
     font-size: 19px;
     font-weight: bold;
-    color: var(--primary);
-    margin-bottom: 14px;
+    margin: 15px 0;
 }
 
-.actions {
-    display: flex;
-    gap: 7px;
-}
-
-.actions button {
-    flex: 1;
-    padding: 9px 5px;
-}
+.actions { display: flex; gap: 8px; }
+.actions button { flex: 1; font-size: 12px; padding: 9px 5px; }
 
 .empty {
     grid-column: 1 / -1;
-    text-align: center;
     padding: 45px 10px;
-    color: #806d76;
+    text-align: center;
+    color: #888;
+    border: 1px dashed #333;
 }
 
 footer {
+    padding: 30px 20px;
     text-align: center;
-    padding: 25px;
-    color: #806d76;
-    font-size: 13px;
+    color: #777;
+    background: #101010;
+    border-top: 1px solid #282828;
+    font-size: 12px;
 }
 
-/* Editor dialog */
 dialog {
     width: min(460px, 92%);
-    margin: auto;
-    border: none;
-    border-radius: 14px;
-    padding: 24px;
-    background: white;
-    color: var(--text);
+    max-height: 85vh;
+    overflow-y: auto;
+    background: #171717;
+    color: white;
+    border: 1px solid #3c3c3c;
+    padding: 25px;
+    border-radius: 4px;
 }
 
 dialog::backdrop {
-    background: #24121b99;
+    background: rgba(0,0,0,.88);
+    backdrop-filter: blur(5px);
 }
 
 dialog h2 {
-    margin-bottom: 18px;
+    margin-top: 0;
+    font-size: 21px;
 }
 
 .form-fields {
     display: grid;
-    gap: 12px;
+    gap: 15px;
 }
 
 .form-fields label {
     display: grid;
-    gap: 6px;
-    font-size: 13px;
-    font-weight: bold;
+    gap: 7px;
+    color: #ccc;
+    font-size: 12px;
 }
 
 .form-buttons {
     display: flex;
     gap: 10px;
-    margin-top: 18px;
+    margin-top: 20px;
 }
 
-.form-buttons button {
-    flex: 1;
+.form-buttons button { flex: 1; }
+
+.small-note {
+    font-size: 11px;
+    line-height: 1.6;
+    color: #888;
+}
+
+#entrance {
+    position: fixed;
+    z-index: 10;
+    inset: 0;
+    background: rgba(0,0,0,.94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+}
+
+.entrance-panel {
+    width: min(500px, 100%);
+    padding: 32px;
+    text-align: center;
+    background: #171717;
+    border: 1px solid #292929;
+    box-shadow: 0 15px 70px #000;
+}
+
+.entrance-panel h2 {
+    font-size: 25px;
+    margin: 0 0 20px;
+}
+
+.entrance-panel h2 span {
+    color: #111;
+    background: var(--orange);
+    padding: 3px 5px;
+}
+
+.entrance-panel p {
+    color: #c1c1c1;
+    font-size: 12px;
+    line-height: 1.7;
+    margin: 18px 0;
+}
+
+.enter-button {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+    padding: 14px;
+    font-weight: bold;
+    background: var(--orange);
+    color: #111;
+}
+
+.entrance-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #777;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 520px) {
+    header { padding: 0 15px; }
+    .logo { font-size: 15px; }
+    .nav a { display: none; }
+    .hero { padding: 45px 18px; }
+    main { padding: 25px 14px 50px; }
+    .entrance-panel { padding: 25px 20px; }
 }
 </style>
 </head>
 
 <body>
 
+<!-- Intro panel -->
+<div id="entrance">
+    <div class="entrance-panel">
+        <div class="entrance-label">INDEPENDENT UNDERGROUND CATALOG</div>
+        <h2>Midget <span>Uprising</span></h2>
+
+        <p>
+            Welcome to the underground. Explore the collection,
+            browse the listings, and discover what's inside.
+        </p>
+
+        <button class="enter-button" onclick="enterSite()">
+            ENTER THE UPRISING &rarr;
+        </button>
+
+        <p class="small-note">
+            Experimental design. Independent catalog.
+            All listings are managed by the site owner.
+        </p>
+
+        <div class="entrance-label">EST. 2026 · CLASSIFIED ACCESS</div>
+    </div>
+</div>
+
 <header>
-    <div class="logo" id="storeLogo">Andie's Store</div>
-    <button class="primary-btn" onclick="openEditor()">
-        + Add Product
-    </button>
+    <div class="logo" id="storeLogo">
+        MIDGET <span>UPRISING</span>
+    </div>
+
+    <nav class="nav">
+        <a href="#catalog">CATALOG</a>
+        <button class="secondary" onclick="editStore()">EDIT SITE</button>
+        <button class="primary" onclick="openEditor()">+ ADD ITEM</button>
+    </nav>
 </header>
 
 <section class="hero">
-    <h1 id="heroTitle">Welcome to Andie's Store</h1>
+    <div class="eyebrow">WELCOME TO THE UNDERGROUND</div>
+    <h1 id="heroTitle">THE UPRISING BEGINS.</h1>
     <p id="heroDescription">
-        Explore our collection and discover something you love.
+        A collection outside the ordinary.
+        Browse the catalog and explore the listings.
     </p>
+    <button class="primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
+        EXPLORE CATALOG
+    </button>
 </section>
 
-<main>
+<main id="catalog">
+    <div class="section-heading">
+        <h2>THE <span>CATALOG</span></h2>
+        <span id="itemCount" style="color:#888;font-size:12px">0 ITEMS</span>
+    </div>
+
     <div class="toolbar">
-        <input id="search" placeholder="Search products..."
+        <input id="search" placeholder="Search the catalog..."
                oninput="renderProducts()">
-        <button class="secondary-btn" onclick="editStore()">
-            Customize Website
-        </button>
+        <button class="secondary" onclick="editStore()">CUSTOMIZE</button>
     </div>
 
     <div id="products"></div>
 </main>
 
 <footer>
-    <p id="footerText">© 2026 Andie's Store. All rights reserved.</p>
+    <p id="footerText">MIDGET UPRISING © 2026</p>
+    <p style="margin-top:8px">AN INDEPENDENT EXPERIMENTAL CATALOG</p>
 </footer>
 
+<!-- Product editor -->
 <dialog id="productDialog">
-    <h2 id="dialogTitle">Add Product</h2>
+    <h2 id="dialogTitle">Add Item</h2>
 
     <form id="productForm">
         <div class="form-fields">
-            <label>
-                Product Name
-                <input id="productName" required maxlength="100">
+            <label>ITEM NAME
+                <input id="productName" maxlength="100" required>
             </label>
 
-            <label>
-                Price
-                <input id="productPrice" type="number"
-                       min="0" step="0.01" required>
+            <label>PRICE
+                <input id="productPrice" type="number" min="0"
+                       step="0.01" required>
             </label>
 
-            <label>
-                Description
-                <textarea id="productDescription"
-                          rows="3" maxlength="1000"></textarea>
+            <label>DESCRIPTION
+                <textarea id="productDescription" rows="4"
+                          maxlength="1000"></textarea>
             </label>
 
-            <label>
-                Product Picture
-                <input id="productImage" type="file"
-                       accept="image/*">
+            <label>UPLOAD PICTURE
+                <input id="productImage" type="file" accept="image/*">
             </label>
 
-            <label>
-                Or use an image URL
-                <input id="productImageUrl"
-                       type="url" placeholder="https://example.com/image.jpg">
+            <label>OR IMAGE URL
+                <input id="productImageUrl" type="url"
+                       placeholder="https://example.com/image.jpg">
             </label>
 
-            <p id="imageHint" style="font-size:12px;color:#806d76">
-                Choose a picture from your device or enter an image URL.
+            <p class="small-note">
+                Use an image under 2 MB. Uploaded images are saved
+                in this browser.
             </p>
         </div>
 
         <div class="form-buttons">
-            <button type="button" class="secondary-btn"
-                    onclick="closeEditor()">Cancel</button>
-            <button type="submit" class="primary-btn">Save Product</button>
+            <button type="button" class="secondary"
+                    onclick="closeEditor()">CANCEL</button>
+            <button type="submit" class="primary">SAVE ITEM</button>
         </div>
     </form>
 </dialog>
 
+<!-- Site customization -->
 <dialog id="customDialog">
-    <h2>Customize Website</h2>
+    <h2>Customize Interface</h2>
+
     <form id="customForm">
         <div class="form-fields">
-            <label>
-                Store Name
+            <label>BRAND NAME
                 <input id="customLogo" required>
             </label>
-            <label>
-                Main Heading
+
+            <label>MAIN HEADLINE
                 <input id="customTitle" required>
             </label>
-            <label>
-                Welcome Description
+
+            <label>INTRODUCTION
                 <textarea id="customDescription" rows="3"></textarea>
             </label>
-            <label>
-                Theme Color
-                <input id="customColor" type="color" value="#a85575">
+
+            <label>ACCENT COLOR
+                <input id="customColor" type="color" value="#ff9800">
             </label>
         </div>
+
         <div class="form-buttons">
-            <button type="button" class="secondary-btn"
+            <button type="button" class="secondary"
                     onclick="document.getElementById('customDialog').close()">
-                Cancel
+                CANCEL
             </button>
-            <button class="primary-btn" type="submit">Apply Changes</button>
+            <button type="submit" class="primary">APPLY CHANGES</button>
         </div>
     </form>
 </dialog>
 
 <script>
+const $ = id => document.getElementById(id);
+
 let products = [];
 let editingId = null;
 let selectedImage = "";
 
-const $ = id => document.getElementById(id);
-
-// Load saved data from this browser.
-try {
-    products = JSON.parse(localStorage.getItem("andieProducts") || "[]");
-} catch {
-    products = [];
-}
-
-let storeSettings = {
-    logo: "Andie's Store",
-    title: "Welcome to Andie's Store",
-    description: "Explore our collection and discover something you love.",
-    color: "#a85575"
+const defaultSettings = {
+    logo: "MIDGET UPRISING",
+    title: "THE UPRISING BEGINS.",
+    description: "A collection outside the ordinary. Browse the catalog and explore the listings.",
+    color: "#ff9800"
 };
 
+let settings = {...defaultSettings};
+
 try {
-    storeSettings = {
-        ...storeSettings,
-        ...JSON.parse(localStorage.getItem("andieSettings") || "{}")
+    products = JSON.parse(localStorage.getItem("muProducts") || "[]");
+    settings = {
+        ...defaultSettings,
+        ...JSON.parse(localStorage.getItem("muSettings") || "{}")
     };
-} catch {}
+} catch (error) {
+    products = [];
+    settings = {...defaultSettings};
+}
+
+function enterSite() {
+    $("entrance").style.display = "none";
+}
 
 function saveProducts() {
     try {
-        localStorage.setItem("andieProducts", JSON.stringify(products));
-    } catch {
-        alert("Storage is full. Try using smaller images.");
+        localStorage.setItem("muProducts", JSON.stringify(products));
+    } catch (error) {
+        alert("Storage limit reached. Try smaller pictures or fewer items.");
     }
 }
 
 function saveSettings() {
-    localStorage.setItem("andieSettings", JSON.stringify(storeSettings));
+    localStorage.setItem("muSettings", JSON.stringify(settings));
 }
 
 function applySettings() {
-    $("storeLogo").textContent = storeSettings.logo;
-    $("heroTitle").textContent = storeSettings.title;
-    $("heroDescription").textContent = storeSettings.description;
+    const parts = settings.logo.trim().split(/\s+/);
+    const last = parts.pop() || "UPRISING";
+    $("storeLogo").replaceChildren();
+
+    const first = document.createTextNode(
+        (parts.length ? parts.join(" ") + " " : "")
+    );
+    const accent = document.createElement("span");
+    accent.textContent = last;
+    $("storeLogo").append(first, accent);
+
+    $("heroTitle").textContent = settings.title;
+    $("heroDescription").textContent = settings.description;
     $("footerText").textContent =
-        `© ${new Date().getFullYear()} ${storeSettings.logo}. All rights reserved.`;
-    document.documentElement.style.setProperty("--primary", storeSettings.color);
+        settings.logo + " © " + new Date().getFullYear();
+
+    document.documentElement.style.setProperty("--orange", settings.color);
 }
 
 function editStore() {
-    $("customLogo").value = storeSettings.logo;
-    $("customTitle").value = storeSettings.title;
-    $("customDescription").value = storeSettings.description;
-    $("customColor").value = storeSettings.color;
+    $("customLogo").value = settings.logo;
+    $("customTitle").value = settings.title;
+    $("customDescription").value = settings.description;
+    $("customColor").value = settings.color;
     $("customDialog").showModal();
 }
 
 $("customForm").addEventListener("submit", event => {
     event.preventDefault();
 
-    storeSettings = {
+    settings = {
         logo: $("customLogo").value.trim(),
         title: $("customTitle").value.trim(),
         description: $("customDescription").value.trim(),
@@ -399,24 +580,23 @@ $("customForm").addEventListener("submit", event => {
 function openEditor(id = null) {
     editingId = id;
     selectedImage = "";
-
     $("productForm").reset();
-    $("dialogTitle").textContent = id === null ? "Add Product" : "Edit Product";
+
+    $("dialogTitle").textContent =
+        id === null ? "Add Item" : "Edit Item";
 
     if (id !== null) {
-        const product = products.find(item => item.id === id);
-        if (!product) return;
+        const item = products.find(p => p.id === id);
+        if (!item) return;
 
-        $("productName").value = product.name;
-        $("productPrice").value = product.price;
-        $("productDescription").value = product.description;
-        $("productImageUrl").value = product.image.startsWith("data:")
-            ? "" : product.image;
+        $("productName").value = item.name;
+        $("productPrice").value = item.price;
+        $("productDescription").value = item.description;
+        $("productImageUrl").value =
+            item.image && !item.image.startsWith("data:")
+                ? item.image : "";
 
-        selectedImage = product.image;
-        $("imageHint").textContent = "Leave the picture fields unchanged to keep the current image.";
-    } else {
-        $("imageHint").textContent = "Choose a picture from your device or enter an image URL.";
+        selectedImage = item.image || "";
     }
 
     $("productDialog").showModal();
@@ -437,7 +617,7 @@ $("productImage").addEventListener("change", event => {
     }
 
     if (file.size > 2 * 1024 * 1024) {
-        alert("Please choose an image under 2 MB to help prevent browser storage issues.");
+        alert("Please use an image smaller than 2 MB.");
         event.target.value = "";
         return;
     }
@@ -459,17 +639,17 @@ $("productForm").addEventListener("submit", event => {
     const imageUrl = $("productImageUrl").value.trim();
 
     if (!name || !Number.isFinite(price) || price < 0) {
-        alert("Please enter a product name and valid price.");
+        alert("Enter a valid item name and price.");
         return;
     }
 
     const image = imageUrl || selectedImage || "";
 
     if (editingId !== null) {
-        products = products.map(product =>
-            product.id === editingId
-                ? { ...product, name, price, description, image }
-                : product
+        products = products.map(item =>
+            item.id === editingId
+                ? {...item, name, price, description, image}
+                : item
         );
     } else {
         products.push({
@@ -486,11 +666,11 @@ $("productForm").addEventListener("submit", event => {
     closeEditor();
 });
 
-function createElement(tag, className, text) {
-    const element = document.createElement(tag);
-    if (className) element.className = className;
-    if (text !== undefined) element.textContent = text;
-    return element;
+function element(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
 }
 
 function renderProducts() {
@@ -499,53 +679,62 @@ function renderProducts() {
 
     container.replaceChildren();
 
-    const filtered = products.filter(product =>
-        product.name.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query)
+    const filtered = products.filter(item =>
+        item.name.toLowerCase().includes(query) ||
+        item.description.toLowerCase().includes(query)
     );
 
+    $("itemCount").textContent =
+        filtered.length + (filtered.length === 1 ? " ITEM" : " ITEMS");
+
     if (!filtered.length) {
-        container.append(
-            createElement("div", "empty",
-                query ? "No matching products found." :
-                "No products yet. Click “Add Product” to get started.")
-        );
+        container.append(element(
+            "div", "empty",
+            query ? "No matching listings found." :
+            "No listings yet. Click + ADD ITEM to begin."
+        ));
         return;
     }
 
-    filtered.forEach(product => {
-        const card = createElement("article", "product");
+    filtered.forEach(item => {
+        const card = element("article", "product");
 
-        const img = document.createElement("img");
-        img.alt = product.name;
-        img.loading = "lazy";
-        img.src = product.image || "";
-        img.hidden = !product.image;
-        img.onerror = () => { img.hidden = true; };
+        if (item.image) {
+            const img = element("img");
+            img.src = item.image;
+            img.alt = item.name;
+            img.loading = "lazy";
+            img.onerror = () => img.remove();
+            card.append(img);
+        }
 
-        const info = createElement("div", "product-info");
-        const name = createElement("h3", "", product.name);
-        const description = createElement("p", "description",
-            product.description || "No description available.");
+        const info = element("div", "product-info");
+        const name = element("h3", "", item.name);
+        const description = element(
+            "p", "description",
+            item.description || "No description provided."
+        );
 
-        const price = createElement("div", "price",
-            "₱" + Number(product.price).toLocaleString("en-PH", {
+        const price = element(
+            "div", "price",
+            "₱" + Number(item.price).toLocaleString("en-PH", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
-            }));
+            })
+        );
 
-        const actions = createElement("div", "actions");
-        const edit = createElement("button", "secondary-btn", "Edit");
-        const remove = createElement("button", "secondary-btn", "Delete");
+        const actions = element("div", "actions");
+        const edit = element("button", "secondary", "EDIT");
+        const remove = element("button", "secondary", "DELETE");
 
         edit.type = "button";
         remove.type = "button";
 
-        edit.addEventListener("click", () => openEditor(product.id));
+        edit.addEventListener("click", () => openEditor(item.id));
 
         remove.addEventListener("click", () => {
-            if (confirm(`Delete "${product.name}"?`)) {
-                products = products.filter(item => item.id !== product.id);
+            if (confirm("Delete " + item.name + "?")) {
+                products = products.filter(p => p.id !== item.id);
                 saveProducts();
                 renderProducts();
             }
@@ -553,7 +742,7 @@ function renderProducts() {
 
         actions.append(edit, remove);
         info.append(name, description, price, actions);
-        card.append(img, info);
+        card.append(info);
         container.append(card);
     });
 }

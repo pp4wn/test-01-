@@ -1,0 +1,566 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andie's Product Store</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #a85575;
+    --background: #fff8fa;
+    --text: #30232a;
+    --card: #ffffff;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+}
+
+header {
+    background: white;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0dfe6;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+button {
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.primary-btn {
+    background: var(--primary);
+    color: white;
+}
+
+.secondary-btn {
+    background: #f5e6ec;
+    color: var(--text);
+}
+
+.hero {
+    text-align: center;
+    padding: 55px 20px;
+    background: #fcecf2;
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    color: #705c65;
+    line-height: 1.6;
+}
+
+main {
+    max-width: 1200px;
+    padding: 35px 20px;
+    margin: auto;
+}
+
+.toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+input, textarea {
+    padding: 11px;
+    border: 1px solid #e6cdd7;
+    border-radius: 8px;
+    font: inherit;
+    width: 100%;
+}
+
+#search {
+    flex: 1;
+    min-width: 180px;
+}
+
+#products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+.product {
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #f0dfe6;
+}
+
+.product img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    background: #f6e9ef;
+    display: block;
+}
+
+.product-info {
+    padding: 16px;
+}
+
+.product h3 {
+    margin-bottom: 8px;
+}
+
+.description {
+    font-size: 14px;
+    color: #76656d;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    white-space: pre-wrap;
+}
+
+.price {
+    font-size: 19px;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 14px;
+}
+
+.actions {
+    display: flex;
+    gap: 7px;
+}
+
+.actions button {
+    flex: 1;
+    padding: 9px 5px;
+}
+
+.empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 45px 10px;
+    color: #806d76;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #806d76;
+    font-size: 13px;
+}
+
+/* Editor dialog */
+dialog {
+    width: min(460px, 92%);
+    margin: auto;
+    border: none;
+    border-radius: 14px;
+    padding: 24px;
+    background: white;
+    color: var(--text);
+}
+
+dialog::backdrop {
+    background: #24121b99;
+}
+
+dialog h2 {
+    margin-bottom: 18px;
+}
+
+.form-fields {
+    display: grid;
+    gap: 12px;
+}
+
+.form-fields label {
+    display: grid;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.form-buttons button {
+    flex: 1;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo" id="storeLogo">Andie's Store</div>
+    <button class="primary-btn" onclick="openEditor()">
+        + Add Product
+    </button>
+</header>
+
+<section class="hero">
+    <h1 id="heroTitle">Welcome to Andie's Store</h1>
+    <p id="heroDescription">
+        Explore our collection and discover something you love.
+    </p>
+</section>
+
+<main>
+    <div class="toolbar">
+        <input id="search" placeholder="Search products..."
+               oninput="renderProducts()">
+        <button class="secondary-btn" onclick="editStore()">
+            Customize Website
+        </button>
+    </div>
+
+    <div id="products"></div>
+</main>
+
+<footer>
+    <p id="footerText">© 2026 Andie's Store. All rights reserved.</p>
+</footer>
+
+<dialog id="productDialog">
+    <h2 id="dialogTitle">Add Product</h2>
+
+    <form id="productForm">
+        <div class="form-fields">
+            <label>
+                Product Name
+                <input id="productName" required maxlength="100">
+            </label>
+
+            <label>
+                Price
+                <input id="productPrice" type="number"
+                       min="0" step="0.01" required>
+            </label>
+
+            <label>
+                Description
+                <textarea id="productDescription"
+                          rows="3" maxlength="1000"></textarea>
+            </label>
+
+            <label>
+                Product Picture
+                <input id="productImage" type="file"
+                       accept="image/*">
+            </label>
+
+            <label>
+                Or use an image URL
+                <input id="productImageUrl"
+                       type="url" placeholder="https://example.com/image.jpg">
+            </label>
+
+            <p id="imageHint" style="font-size:12px;color:#806d76">
+                Choose a picture from your device or enter an image URL.
+            </p>
+        </div>
+
+        <div class="form-buttons">
+            <button type="button" class="secondary-btn"
+                    onclick="closeEditor()">Cancel</button>
+            <button type="submit" class="primary-btn">Save Product</button>
+        </div>
+    </form>
+</dialog>
+
+<dialog id="customDialog">
+    <h2>Customize Website</h2>
+    <form id="customForm">
+        <div class="form-fields">
+            <label>
+                Store Name
+                <input id="customLogo" required>
+            </label>
+            <label>
+                Main Heading
+                <input id="customTitle" required>
+            </label>
+            <label>
+                Welcome Description
+                <textarea id="customDescription" rows="3"></textarea>
+            </label>
+            <label>
+                Theme Color
+                <input id="customColor" type="color" value="#a85575">
+            </label>
+        </div>
+        <div class="form-buttons">
+            <button type="button" class="secondary-btn"
+                    onclick="document.getElementById('customDialog').close()">
+                Cancel
+            </button>
+            <button class="primary-btn" type="submit">Apply Changes</button>
+        </div>
+    </form>
+</dialog>
+
+<script>
+let products = [];
+let editingId = null;
+let selectedImage = "";
+
+const $ = id => document.getElementById(id);
+
+// Load saved data from this browser.
+try {
+    products = JSON.parse(localStorage.getItem("andieProducts") || "[]");
+} catch {
+    products = [];
+}
+
+let storeSettings = {
+    logo: "Andie's Store",
+    title: "Welcome to Andie's Store",
+    description: "Explore our collection and discover something you love.",
+    color: "#a85575"
+};
+
+try {
+    storeSettings = {
+        ...storeSettings,
+        ...JSON.parse(localStorage.getItem("andieSettings") || "{}")
+    };
+} catch {}
+
+function saveProducts() {
+    try {
+        localStorage.setItem("andieProducts", JSON.stringify(products));
+    } catch {
+        alert("Storage is full. Try using smaller images.");
+    }
+}
+
+function saveSettings() {
+    localStorage.setItem("andieSettings", JSON.stringify(storeSettings));
+}
+
+function applySettings() {
+    $("storeLogo").textContent = storeSettings.logo;
+    $("heroTitle").textContent = storeSettings.title;
+    $("heroDescription").textContent = storeSettings.description;
+    $("footerText").textContent =
+        `© ${new Date().getFullYear()} ${storeSettings.logo}. All rights reserved.`;
+    document.documentElement.style.setProperty("--primary", storeSettings.color);
+}
+
+function editStore() {
+    $("customLogo").value = storeSettings.logo;
+    $("customTitle").value = storeSettings.title;
+    $("customDescription").value = storeSettings.description;
+    $("customColor").value = storeSettings.color;
+    $("customDialog").showModal();
+}
+
+$("customForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    storeSettings = {
+        logo: $("customLogo").value.trim(),
+        title: $("customTitle").value.trim(),
+        description: $("customDescription").value.trim(),
+        color: $("customColor").value
+    };
+
+    saveSettings();
+    applySettings();
+    $("customDialog").close();
+});
+
+function openEditor(id = null) {
+    editingId = id;
+    selectedImage = "";
+
+    $("productForm").reset();
+    $("dialogTitle").textContent = id === null ? "Add Product" : "Edit Product";
+
+    if (id !== null) {
+        const product = products.find(item => item.id === id);
+        if (!product) return;
+
+        $("productName").value = product.name;
+        $("productPrice").value = product.price;
+        $("productDescription").value = product.description;
+        $("productImageUrl").value = product.image.startsWith("data:")
+            ? "" : product.image;
+
+        selectedImage = product.image;
+        $("imageHint").textContent = "Leave the picture fields unchanged to keep the current image.";
+    } else {
+        $("imageHint").textContent = "Choose a picture from your device or enter an image URL.";
+    }
+
+    $("productDialog").showModal();
+}
+
+function closeEditor() {
+    $("productDialog").close();
+}
+
+$("productImage").addEventListener("change", event => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        alert("Please choose an image file.");
+        event.target.value = "";
+        return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+        alert("Please choose an image under 2 MB to help prevent browser storage issues.");
+        event.target.value = "";
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+        selectedImage = reader.result;
+        $("productImageUrl").value = "";
+    };
+    reader.readAsDataURL(file);
+});
+
+$("productForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const name = $("productName").value.trim();
+    const price = Number($("productPrice").value);
+    const description = $("productDescription").value.trim();
+    const imageUrl = $("productImageUrl").value.trim();
+
+    if (!name || !Number.isFinite(price) || price < 0) {
+        alert("Please enter a product name and valid price.");
+        return;
+    }
+
+    const image = imageUrl || selectedImage || "";
+
+    if (editingId !== null) {
+        products = products.map(product =>
+            product.id === editingId
+                ? { ...product, name, price, description, image }
+                : product
+        );
+    } else {
+        products.push({
+            id: Date.now(),
+            name,
+            price,
+            description,
+            image
+        });
+    }
+
+    saveProducts();
+    renderProducts();
+    closeEditor();
+});
+
+function createElement(tag, className, text) {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (text !== undefined) element.textContent = text;
+    return element;
+}
+
+function renderProducts() {
+    const container = $("products");
+    const query = $("search").value.toLowerCase().trim();
+
+    container.replaceChildren();
+
+    const filtered = products.filter(product =>
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query)
+    );
+
+    if (!filtered.length) {
+        container.append(
+            createElement("div", "empty",
+                query ? "No matching products found." :
+                "No products yet. Click “Add Product” to get started.")
+        );
+        return;
+    }
+
+    filtered.forEach(product => {
+        const card = createElement("article", "product");
+
+        const img = document.createElement("img");
+        img.alt = product.name;
+        img.loading = "lazy";
+        img.src = product.image || "";
+        img.hidden = !product.image;
+        img.onerror = () => { img.hidden = true; };
+
+        const info = createElement("div", "product-info");
+        const name = createElement("h3", "", product.name);
+        const description = createElement("p", "description",
+            product.description || "No description available.");
+
+        const price = createElement("div", "price",
+            "₱" + Number(product.price).toLocaleString("en-PH", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }));
+
+        const actions = createElement("div", "actions");
+        const edit = createElement("button", "secondary-btn", "Edit");
+        const remove = createElement("button", "secondary-btn", "Delete");
+
+        edit.type = "button";
+        remove.type = "button";
+
+        edit.addEventListener("click", () => openEditor(product.id));
+
+        remove.addEventListener("click", () => {
+            if (confirm(`Delete "${product.name}"?`)) {
+                products = products.filter(item => item.id !== product.id);
+                saveProducts();
+                renderProducts();
+            }
+        });
+
+        actions.append(edit, remove);
+        info.append(name, description, price, actions);
+        card.append(img, info);
+        container.append(card);
+    });
+}
+
+applySettings();
+renderProducts();
+</script>
+
+</body>
+</html>
